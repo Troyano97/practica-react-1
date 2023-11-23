@@ -1,36 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
-import Boton from './componentes/boton';
+import Tarjeta from './componentes/Tarjeta';
 
-/* const API = "https://pokeapi.co/api/v2/pokemon/ditto";
- */
+const DEF_TARJETA = <Tarjeta
+  key={"def key"}
+  name="def nombre"
+  weight="def peso"
+  base_experience="exp base"
+/>
 function App() {
 
+  const [listaPokemon, setListaPokemon] = useState([DEF_TARJETA]);
 
   useEffect(() => {
     console.log("Effect");
 
 
     async function pedirPokemon() {
-      const res = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20  ")
-/* 
-      .then(response => response.json())
-
-        .then(data => console.log(data)) */
-      let listaPokemon = "def 0"
+      const res = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20");
+      let listaPokemon = "def 0";
+      const tempComponentTarjeta = []
       if (res.ok)
-
         listaPokemon = await res.json();
       console.log(listaPokemon)
-
       listaPokemon.results.forEach(async pokemon => {
-        
+        tempComponentTarjeta.push(
+          <Tarjeta
+            key={listaPokemon.id}
+            name={listaPokemon.name}
+            weight={listaPokemon.weight}
+            base_experience={listaPokemon.base_experience}
+          />
+        )
+
         const resPoke = await fetch(pokemon.url)
 
         const infoPoke = await resPoke.json();
         console.log(infoPoke)
       });
-
+      setListaPokemon(tempComponentTarjeta);
     }
 
     pedirPokemon()
@@ -43,7 +51,7 @@ function App() {
 
   return (
     <>
-      <Boton></Boton>
+      <Tarjeta></Tarjeta>
     </>
   )
 }
