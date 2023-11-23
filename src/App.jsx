@@ -24,19 +24,21 @@ function App() {
         listaPokemon = await res.json();
       console.log(listaPokemon)
       listaPokemon.results.forEach(async pokemon => {
-        tempComponentTarjeta.push(
-          <Tarjeta
-            key={listaPokemon.id}
-            name={listaPokemon.name}
-            weight={listaPokemon.weight}
-            base_experience={listaPokemon.base_experience}
-          />
-        )
-
+        
         const resPoke = await fetch(pokemon.url)
 
         const infoPoke = await resPoke.json();
         console.log(infoPoke)
+        tempComponentTarjeta.push(
+          <Tarjeta
+            key={infoPoke.id}
+            name={infoPoke.name}
+            weight={infoPoke.weight}
+            base_experience={infoPoke.base_experience}
+          />
+        )
+
+
       });
       setListaPokemon(tempComponentTarjeta);
     }
@@ -51,7 +53,7 @@ function App() {
 
   return (
     <>
-      <Tarjeta></Tarjeta>
+ {listaPokemon}
     </>
   )
 }
