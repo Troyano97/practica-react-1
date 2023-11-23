@@ -19,25 +19,29 @@ function App() {
     async function pedirPokemon() {
       const res = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20");
       let listaPokemon = "def 0";
-      const tempComponentTarjeta = []
+      let tempComponentTarjeta = []
       if (res.ok)
         listaPokemon = await res.json();
       console.log(listaPokemon)
-      listaPokemon.results.forEach(async pokemon => {
-        
+      let tempPoke = "def pokemon"
+      listaPokemon.results.forEach(async (pokemon, i , vect) => {
+        tempPoke = await fetch(pokemon.url)
+        tempPoke = await tempPoke.json();
         const resPoke = await fetch(pokemon.url)
 
-        const infoPoke = await resPoke.json();
+/*         const infoPoke = await resPoke.json(); */
         console.log(infoPoke)
         tempComponentTarjeta.push(
           <Tarjeta
-            key={infoPoke.id}
-            name={infoPoke.name}
-            weight={infoPoke.weight}
-            base_experience={infoPoke.base_experience}
+            key={tempPoke.id}
+            name={tempPoke.name}
+            weight={tempPoke.weight}
+            base_experience={tempPoke.base_experience}
           />
         )
-
+          if (i == vec.length-1){
+            setListaPokemon (tempComponentTarjeta)
+          }
 
       });
       setListaPokemon(tempComponentTarjeta);
