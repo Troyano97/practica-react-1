@@ -4,6 +4,7 @@ import Tarjeta from './componentes/Tarjeta';
 
 const DEF_TARJETA = <Tarjeta
   key={"def key"}
+  imagen={"def img"}
   name="def nombre"
   weight="def peso"
   base_experience="exp base"
@@ -33,6 +34,7 @@ function App() {
           tempComponentTarjeta.push(
             <Tarjeta
               key={tempPoke.id}
+              imagen={tempPoke.sprites.other.dream_world.front_default}
               name={tempPoke.name}
               weight={tempPoke.weight}
               base_experience={tempPoke.base_experience}
@@ -55,9 +57,9 @@ function App() {
 
 
   return (
-    <>
-      {listaPokemon}
-    </>
+    <div className="contenedorPokemons">
+    {listaPokemon}
+  </div>
   );
 }
 
